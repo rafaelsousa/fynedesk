@@ -293,6 +293,9 @@ func (l *desktop) registerShortcuts() {
 	fynedesk.Instance().AddShortcut(&fynedesk.Shortcut{Name: "Lock screen", KeyName: fyne.KeyL,
 		Modifier: fynedesk.UserModifier},
 		l.LockScreen)
+	fynedesk.Instance().AddShortcut(&fynedesk.Shortcut{Name: "Close Window", KeyName: fyne.KeyF4,
+		Modifier: fynedesk.UserModifier},
+		l.CloseActiveWindow)
 }
 
 func (l *desktop) startXscreensaver() {
@@ -371,4 +374,9 @@ func (l *desktop) LockScreen() {
 		fyne.LogError("Failed to lock screen", err)
 		l.WindowManager().Blank()
 	}
+}
+
+func (l *desktop) CloseActiveWindow() {
+	activeWindow := l.wm.TopWindow()
+	activeWindow.Close()
 }
